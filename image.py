@@ -19,8 +19,8 @@ def make_circle(value, center, offset, color, dwg):
     dwg.add(dwg.circle(center=(center[0] + offset[0], center[1] + offset[1]), r=value/2, stroke='none', fill=color, opacity='1'))
 
 def make_circles(row, col, rgb, dwg, cell_size):
-    center = [col * cell_size, row * cell_size]
     shift = cell_size / 4
+    center = [col * cell_size + 2* shift, row * cell_size + 2* shift]
     make_circle(math.sqrt(int(rgb[0])), center, [-shift, 0], "#f00", dwg)
     make_circle(math.sqrt(int(rgb[1]))/1.4, center, [shift, 0], "#0f0", dwg)
     make_circle(math.sqrt(int(rgb[1]))/1.4, center, [-shift, shift * 2], "#0f0", dwg)
@@ -29,11 +29,8 @@ def make_circles(row, col, rgb, dwg, cell_size):
 
 def to_svg(cell_size = 30):
 
-    top_offset = 20
-    left_offset = 20
-
     dwg = svgwrite.Drawing('./export/grid.svg')
-    dwg.add(dwg.rect(insert=(0, 0), size=(basewidth * cell_size,hsize * cell_size), rx=None, ry=None, fill='black'))
+    dwg.add(dwg.rect(insert=(0, 0), size=(basewidth * cell_size,hsize * cell_size + cell_size / 2), rx=None, ry=None, fill='black'))
 
     for row in range(rows):
         for col in range(cols):
